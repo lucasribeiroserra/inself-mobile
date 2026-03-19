@@ -51,6 +51,7 @@ import {
   didEarnNewBadge,
   getCurrentBadge,
   type Badge,
+  localizeBadgeById,
 } from "@/lib/badges";
 import {
   saveReflection,
@@ -362,13 +363,13 @@ export default function HomeScreen() {
         firstPrompt: daily!.steps.identifique ?? null,
         answers: { identifique: a0, aceite: a1, aja: a2 },
         checkinCount,
-        badgeEarned: didEarnNewBadge(checkinCount, checkinCount + 1) ?? null,
+        badgeEarned: didEarnNewBadge(checkinCount, checkinCount + 1, language) ?? null,
         category: daily!.category,
         virtue: daily!.virtue,
       });
       setCheckinCount(saved.checkinCount);
       refreshCheckinCount();
-      setNewBadge(saved.badgeEarned ?? null);
+      setNewBadge(saved.badgeEarned ? localizeBadgeById(saved.badgeEarned.id, language) : null);
       setLastReflectionId(saved.id);
       setJourneyComplete(true);
       refreshReflections();
@@ -378,14 +379,15 @@ export default function HomeScreen() {
         message: language === "en" ? "You completed today’s reflection." : "Você completou a reflexão de hoje.",
       });
       if (saved.badgeEarned) {
+        const localizedBadge = localizeBadgeById(saved.badgeEarned.id, language);
         addNotification({
           type: "badge",
           title: language === "en" ? "New badge unlocked" : "Novo emblema desbloqueado",
           message:
             language === "en"
-              ? `You unlocked the badge ${saved.badgeEarned.name}.`
-              : `Você desbloqueou o emblema ${saved.badgeEarned.name}.`,
-          payload: { badgeName: saved.badgeEarned.name },
+              ? `You unlocked the badge ${localizedBadge?.name ?? saved.badgeEarned.name}.`
+              : `Você desbloqueou o emblema ${localizedBadge?.name ?? saved.badgeEarned.name}.`,
+          payload: { badgeName: localizedBadge?.name ?? saved.badgeEarned.name },
         });
       }
     } catch (e) {

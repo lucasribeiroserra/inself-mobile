@@ -4,21 +4,110 @@ import { apiFetch, isApiConfigured } from "./api";
 export interface Badge {
   id: string;
   name: string;
+  nameEn?: string;
   description: string;
+  descriptionEn?: string;
   requiredCheckins: number;
   icon: string;
 }
 
 export const BADGES: Badge[] = [
-  { id: "desperto", name: "Desperto", description: "Completou sua primeira reflexão", requiredCheckins: 1, icon: "sprout" },
-  { id: "atento", name: "Atento", description: "3 dias de reflexão", requiredCheckins: 3, icon: "eye" },
-  { id: "discipulo", name: "Discípulo", description: "7 dias de reflexão", requiredCheckins: 7, icon: "book-open" },
-  { id: "estoico", name: "Estoico", description: "15 dias de reflexão", requiredCheckins: 15, icon: "domain" },
-  { id: "contemplador", name: "Contemplador", description: "30 dias de reflexão", requiredCheckins: 30, icon: "mirror" },
-  { id: "estrategista", name: "Estrategista", description: "60 dias de reflexão", requiredCheckins: 60, icon: "chess-knight" },
-  { id: "sabio", name: "Sábio", description: "100 dias de reflexão", requiredCheckins: 100, icon: "star" },
-  { id: "virtuoso", name: "Virtuoso", description: "150 dias de reflexão", requiredCheckins: 150, icon: "crown" },
+  {
+    id: "desperto",
+    name: "Desperto",
+    nameEn: "Awake",
+    description: "Completou sua primeira reflexão",
+    descriptionEn: "Completed your first reflection",
+    requiredCheckins: 1,
+    icon: "sprout",
+  },
+  {
+    id: "atento",
+    name: "Atento",
+    nameEn: "Attentive",
+    description: "3 dias de reflexão",
+    descriptionEn: "3 days of reflection",
+    requiredCheckins: 3,
+    icon: "eye",
+  },
+  {
+    id: "discipulo",
+    name: "Discípulo",
+    nameEn: "Disciple",
+    description: "7 dias de reflexão",
+    descriptionEn: "7 days of reflection",
+    requiredCheckins: 7,
+    icon: "book-open",
+  },
+  {
+    id: "estoico",
+    name: "Estoico",
+    nameEn: "Stoic",
+    description: "15 dias de reflexão",
+    descriptionEn: "15 days of reflection",
+    requiredCheckins: 15,
+    icon: "domain",
+  },
+  {
+    id: "contemplador",
+    name: "Contemplador",
+    nameEn: "Contemplative",
+    description: "30 dias de reflexão",
+    descriptionEn: "30 days of reflection",
+    requiredCheckins: 30,
+    icon: "mirror",
+  },
+  {
+    id: "estrategista",
+    name: "Estrategista",
+    nameEn: "Strategist",
+    description: "60 dias de reflexão",
+    descriptionEn: "60 days of reflection",
+    requiredCheckins: 60,
+    icon: "chess-knight",
+  },
+  {
+    id: "sabio",
+    name: "Sábio",
+    nameEn: "Wise",
+    description: "100 dias de reflexão",
+    descriptionEn: "100 days of reflection",
+    requiredCheckins: 100,
+    icon: "star",
+  },
+  {
+    id: "virtuoso",
+    name: "Virtuoso",
+    nameEn: "Virtuous",
+    description: "150 dias de reflexão",
+    descriptionEn: "150 days of reflection",
+    requiredCheckins: 150,
+    icon: "crown",
+  },
 ];
+
+function getBadgeById(badgeId: string): Badge | null {
+  return BADGES.find((b) => b.id === badgeId) ?? null;
+}
+
+export type AppLanguage = "pt" | "en";
+
+export function localizeBadge(badge: Badge, language: AppLanguage): Badge {
+  if (language === "en") {
+    return {
+      ...badge,
+      name: badge.nameEn ?? badge.name,
+      description: badge.descriptionEn ?? badge.description,
+    };
+  }
+  return badge;
+}
+
+export function localizeBadgeById(badgeId: string, language: AppLanguage): Badge | null {
+  const base = getBadgeById(badgeId);
+  if (!base) return null;
+  return localizeBadge(base, language);
+}
 
 const CHECKINS_KEY = "reflectionCheckins";
 const LAST_CHECKIN_KEY = "lastCheckinDate";
@@ -55,22 +144,23 @@ export const incrementCheckin = async (): Promise<number> => {
   return newCount;
 };
 
-export const getCurrentBadge = (count: number): Badge | null => {
+export const getCurrentBadge = (count: number, language: AppLanguage = "pt"): Badge | null => {
   const earned = BADGES.filter((b) => count >= b.requiredCheckins);
-  return earned.length > 0 ? earned[earned.length - 1] : null;
+  return earned.length > 0 ? localizeBadge(earned[earned.length - 1], language) : null;
 };
 
-export const getNextBadge = (count: number): Badge | null => {
-  return BADGES.find((b) => count < b.requiredCheckins) || null;
+export const getNextBadge = (count: number, language: AppLanguage = "pt"): Badge | null => {
+  const next = BADGES.find((b) => count < b.requiredCheckins) || null;
+  return next ? localizeBadge(next, language) : null;
 };
 
-export const getEarnedBadges = (count: number): Badge[] => {
-  return BADGES.filter((b) => count >= b.requiredCheckins);
+export const getEarnedBadges = (count: number, language: AppLanguage = "pt"): Badge[] => {
+  return BADGES.filter((b) => count >= b.requiredCheckins).map((b) => localizeBadge(b, language));
 };
 
-export const didEarnNewBadge = (oldCount: number, newCount: number): Badge | null => {
-  const oldBadges = getEarnedBadges(oldCount);
-  const newBadges = getEarnedBadges(newCount);
+export const didEarnNewBadge = (oldCount: number, newCount: number, language: AppLanguage = "pt"): Badge | null => {
+  const oldBadges = getEarnedBadges(oldCount, language);
+  const newBadges = getEarnedBadges(newCount, language);
   if (newBadges.length > oldBadges.length) {
     return newBadges[newBadges.length - 1];
   }

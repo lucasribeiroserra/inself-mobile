@@ -8,6 +8,7 @@ import { getCurrentBadge } from "@/lib/badges";
 import { darkColors } from "@/lib/themeDark";
 import { useRouter } from "expo-router";
 import AppIcon from "./AppIcon";
+import { useSettings } from "@/contexts/SettingsContext";
 
 const PRIMARY = "#5A7A66";
 
@@ -17,7 +18,8 @@ export default function TopHeader() {
   const { checkinCount } = useAuth();
   const { hasUnread } = useNotifications();
   const router = useRouter();
-  const badge = getCurrentBadge(checkinCount);
+  const { language } = useSettings();
+  const badge = getCurrentBadge(checkinCount, language);
   const iconPrimary = isDark ? darkColors.primary : PRIMARY;
 
   return (

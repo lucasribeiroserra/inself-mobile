@@ -7,7 +7,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import { darkColors } from "@/lib/themeDark";
 import { registerForPushNotificationsAsync } from "@/lib/registerPushNotifications";
-import { BADGES, getEarnedBadges, getCheckinCount } from "@/lib/badges";
+import { BADGES, getEarnedBadges, getCheckinCount, localizeBadge } from "@/lib/badges";
 import { ALL_CATEGORIES, getCategoryLabel, type ReflectionCategory } from "@/lib/dailyReflections";
 import TopHeader from "@/components/TopHeader";
 import AppIcon from "@/components/AppIcon";
@@ -81,8 +81,8 @@ export default function ProfileScreen() {
   const [savingLanguage, setSavingLanguage] = React.useState(false);
 
   React.useEffect(() => {
-    getCheckinCount().then((c) => setEarnedBadges(getEarnedBadges(c)));
-  }, [checkinCount]);
+    getCheckinCount().then((c) => setEarnedBadges(getEarnedBadges(c, language)));
+  }, [checkinCount, language]);
 
   // Sempre que abrir o Perfil, tenta obter e enviar o token de push (para quando o projectId for configurado)
   React.useEffect(() => {
@@ -238,19 +238,20 @@ export default function ProfileScreen() {
                 <View className="flex-row items-center gap-2">
                   <MaterialCommunityIcons name="medal" size={14} color={iconPrimary} />
                   <Text className="text-xs uppercase tracking-[0.15em] text-muted-foreground dark:text-dark-muted-fg font-semibold">
-                    Badges
+                    {language === "en" ? "Badges" : "Badges"}
                   </Text>
                 </View>
                 <Text className="text-xs text-muted-foreground dark:text-dark-muted-fg">
-                  {language === "en"
-                    ? `${earnedBadges.length}/${BADGES.length} earned`
-                    : `${earnedBadges.length}/${BADGES.length} conquistados`}
+                    {language === "en"
+                      ? `${earnedBadges.length}/${BADGES.length} earned`
+                      : `${earnedBadges.length}/${BADGES.length} conquistados`}
                 </Text>
               </View>
               <View className="bg-card dark:bg-dark-card rounded-3xl p-5">
                 <View className="flex-row flex-wrap gap-3" style={{ marginHorizontal: -4 }}>
                   {BADGES.map((badge) => {
                     const earned = checkinCount >= badge.requiredCheckins;
+                    const b = localizeBadge(badge, language);
                     return (
                       <View
                         key={badge.id}
@@ -269,12 +270,12 @@ export default function ProfileScreen() {
                           }`}
                           numberOfLines={1}
                         >
-                          {badge.name}
+                          {b.name}
                         </Text>
                         <Text
                           className={`text-[10px] mt-0.5 ${earned ? "text-primary dark:text-dark-primary" : "text-muted-foreground/40 dark:text-dark-muted-fg/40"}`}
                         >
-                          {badge.requiredCheckins} dias
+                          {badge.requiredCheckins} {language === "en" ? "days" : "dias"}
                         </Text>
                       </View>
                     );
@@ -282,7 +283,15 @@ export default function ProfileScreen() {
                 </View>
                 {checkinCount > 0 && (
                   <Text className="text-center text-[12px] text-muted-foreground dark:text-dark-muted-fg mt-3">
-                    {checkinCount} {checkinCount === 1 ? "reflexão" : "reflexões"} completadas
+                    {checkinCount}{" "}
+                    {language === "en"
+                      ? checkinCount === 1
+                        ? "reflection completed"
+                        : "reflections completed"
+                      : checkinCount === 1
+                        ? "reflexão"
+                        : "reflexões"}{" "}
+                    {language === "en" ? "" : "completadas"}
                   </Text>
                 )}
               </View>

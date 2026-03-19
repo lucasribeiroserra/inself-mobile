@@ -18,9 +18,9 @@ export default function CheckInCelebration({
   newBadge,
   onContinue,
 }: CheckInCelebrationProps) {
-  const currentBadge = getCurrentBadge(checkinCount);
-  const nextBadge = getNextBadge(checkinCount);
   const { language } = useSettings();
+  const currentBadge = getCurrentBadge(checkinCount, language);
+  const nextBadge = getNextBadge(checkinCount, language);
   const progress = nextBadge
     ? ((checkinCount - (currentBadge?.requiredCheckins || 0)) /
         (nextBadge.requiredCheckins - (currentBadge?.requiredCheckins || 0))) *
