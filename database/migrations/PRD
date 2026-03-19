@@ -1,0 +1,255 @@
+🧠 INSELF — Product Design Doc (Core Loop)
+🎯 Objetivo do sistema
+
+Criar um loop diário de coaching mental que transforma:
+
+emoção → reflexão → clareza → evolução
+
+🔁 Estrutura do Loop Completo
+1. Seleção de categoria (setup inicial)
+
+O usuário escolhe áreas que quer desenvolver:
+
+Ansiedade
+
+Amor próprio
+
+Estresse
+
+Disciplina
+
+Propósito
+
+Relacionamentos
+
+Resiliência
+
+Clareza mental
+
+👉 Isso define o contexto da jornada
+
+2. Check-in emocional (estado atual)
+
+Usuário responde:
+
+Ansioso
+
+Estressado
+
+Confuso
+
+Desmotivado
+
+Calmo
+
+Confiante
+
+Buscando amor próprio
+
+Buscando disciplina
+
+👉 Isso define o estado mental atual
+
+🧠 Regra central do sistema
+
+Categoria (contexto) + Emoção (estado) → define a jornada
+
+🔗 Motor de decisão (core logic)
+Tabela de conexão
+Emoção	Categoria → Ajuste de contexto	Virtudes alvo
+Ansioso	Ansiedade / Relacionamentos	Serenidade + Clareza
+Estressado	Estresse / Trabalho / Propósito	Serenidade + Autodomínio
+Confuso	Propósito / Clareza mental	Clareza + Sabedoria
+Desmotivado	Disciplina / Propósito	Disciplina + Coragem
+Calmo	Qualquer categoria	Sabedoria
+Confiante	Propósito / Disciplina	Coragem + Integridade
+Buscando amor próprio	Amor próprio / Relacionamentos	Autoconhecimento + Integridade
+Buscando disciplina	Disciplina	Disciplina + Autodomínio
+🧩 Estrutura da Jornada
+
+Cada jornada precisa seguir:
+
+1️⃣ Quote (insight original)
+
+curta
+
+emocional
+
+direta
+
+conectada à emoção + categoria
+
+2️⃣ Citação (base filosófica)
+
+reforça a ideia da quote
+
+traz profundidade
+
+pode ser estoicismo, psicologia, etc
+
+3️⃣ Reflexão guiada (3 perguntas)
+
+Estrutura fixa:
+
+Pergunta 1 — consciência
+
+O que está acontecendo?
+
+Pergunta 2 — confronto
+
+Por que isso está acontecendo?
+
+Pergunta 3 — ação
+
+O que você pode fazer?
+
+🔄 Checkout emocional (fase final)
+
+Pergunta:
+
+Como você está se sentindo agora?
+
+Melhor
+
+Igual
+
+Pior
+
+🎯 Objetivo dessa etapa
+
+medir impacto da jornada
+
+gerar feedback do conteúdo
+
+alimentar inteligência do sistema
+
+🔁 Lógica de aprendizado
+Resposta	Ação do sistema
+Melhor	reforçar tipo de conteúdo
+Igual	ajustar abordagem
+Pior	evitar padrão / revisar
+🧠 Sistema de progressão (virtudes)
+
+Virtudes:
+
+Clareza
+
+Serenidade
+
+Coragem
+
+Disciplina
+
+Autodomínio
+
+Sabedoria
+
+Integridade
+
+Autoconhecimento
+
+Como evolui
+
+Cada jornada soma pontos:
+
+Exemplo:
+
++2 Serenidade
++1 Clareza
+
+Regra
+
+Emoção + Categoria → define quais virtudes evoluem
+
+📊 Conexão completa (resumo do sistema)
+Categoria escolhida
+↓
+Check-in emocional
+↓
+Motor define jornada
+↓
+Quote
+↓
+Citação
+↓
+3 perguntas
+↓
+Usuário escreve
+↓
+Checkout emocional
+↓
+Atualiza virtudes + aprendizado
+🧪 EXEMPLO COMPLETO (caso real)
+Contexto do usuário
+Categoria escolhida:
+
+👉 Relacionamentos
+
+Check-in:
+
+👉 Ansioso
+
+🔎 Interpretação do sistema
+
+dor: insegurança emocional
+
+contexto: relacionamento
+
+objetivo: reduzir ansiedade
+
+virtudes alvo:
+
+Serenidade
+
+Clareza
+
+🧠 Jornada gerada
+1️⃣ Quote
+
+“Ansiedade em relacionamentos quase sempre nasce do medo de perder o que ainda nem aconteceu.”
+
+2️⃣ Citação
+
+“Sofremos mais na imaginação do que na realidade.”
+— Seneca
+
+3️⃣ Reflexão guiada
+
+Pergunta 1 (consciência)
+O que exatamente você teme perder nesse relacionamento?
+
+Pergunta 2 (confronto)
+Esse medo vem de algo real ou de uma expectativa que você criou?
+
+Pergunta 3 (ação)
+O que você pode fazer hoje para agir com mais calma e menos suposição?
+
+✍️ Usuário escreve
+
+(resposta livre)
+
+🔄 Checkout
+
+👉 “Melhor”
+
+📈 Resultado interno
+
++2 Serenidade
+
++1 Clareza
+
+Sistema aprende:
+
+conteúdo funcionou para ansiedade + relacionamento
+
+💡 Insight final de produto
+
+Lucas, agora seu sistema tem:
+
+coerência lógica
+
+progressão clara
+
+loop de aprendizado
+
+personalização real

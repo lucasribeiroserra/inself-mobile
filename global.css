@@ -1,0 +1,147 @@
+/* Fontes Lovable/InSelf (web; no mobile usamos @expo-google-fonts no _layout) */
+/* @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap'); */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Design tokens Lovable/InSelf (igual ao projeto) ===== */
+@layer base {
+  :root {
+    /* Cores – HSL (compatível com Tailwind theme) */
+    --background: 35 30% 95%;
+    --foreground: 220 10% 18%;
+
+    --card: 35 25% 92%;
+    --card-foreground: 220 10% 18%;
+
+    --popover: 35 30% 95%;
+    --popover-foreground: 220 10% 18%;
+
+    --primary: 90 25% 35%;
+    --primary-foreground: 35 30% 95%;
+
+    --secondary: 42 45% 72%;
+    --secondary-foreground: 220 10% 18%;
+
+    --muted: 35 20% 90%;
+    --muted-foreground: 220 8% 50%;
+
+    --accent: 42 45% 72%;
+    --accent-foreground: 220 10% 18%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 35 18% 85%;
+    --input: 35 18% 85%;
+    --ring: 90 25% 35%;
+
+    /* Espaçamento base e raio */
+    --radius: 1rem;
+
+    --success: 142 72% 29%;
+    --success-foreground: 142 72% 29%;
+
+    /* Sidebar (caso use depois) */
+    --sidebar-background: 35 25% 92%;
+    --sidebar-foreground: 220 10% 18%;
+    --sidebar-primary: 90 25% 35%;
+    --sidebar-primary-foreground: 35 30% 95%;
+    --sidebar-accent: 35 20% 88%;
+    --sidebar-accent-foreground: 220 10% 18%;
+    --sidebar-border: 35 18% 85%;
+    --sidebar-ring: 90 25% 35%;
+  }
+
+  .dark {
+    /* Principais */
+    --background: 220 15% 10%;
+    --foreground: 35 20% 90%;
+
+    /* Cards e Popovers */
+    --card: 220 15% 14%;
+    --card-foreground: 35 20% 90%;
+    --popover: 220 15% 12%;
+    --popover-foreground: 35 20% 90%;
+
+    /* Destaque */
+    --primary: 90 30% 50%;
+    --primary-foreground: 220 15% 10%;
+    --secondary: 42 35% 45%;
+    --secondary-foreground: 35 20% 90%;
+    --accent: 42 35% 45%;
+    --accent-foreground: 35 20% 90%;
+
+    /* Neutras */
+    --muted: 220 12% 18%;
+    --muted-foreground: 35 15% 60%;
+
+    /* Feedback */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 72% 45%;
+    --success-foreground: 220 15% 10%;
+
+    /* Bordas */
+    --border: 220 12% 20%;
+    --input: 220 12% 20%;
+    --border-light: 220 12% 25%;
+    --border-medium: 220 12% 20%;
+    --border-heavy: 220 12% 15%;
+
+    /* Focus */
+    --ring: 90 30% 50%;
+
+    /* Sidebar */
+    --sidebar-background: 220 15% 12%;
+    --sidebar-foreground: 35 20% 90%;
+    --sidebar-primary: 90 30% 50%;
+    --sidebar-primary-foreground: 220 15% 10%;
+    --sidebar-accent: 220 12% 18%;
+    --sidebar-accent-foreground: 35 20% 90%;
+    --sidebar-border: 220 12% 20%;
+    --sidebar-ring: 90 30% 50%;
+
+    /* Badges (preenchimento) */
+    --badge-info: 200 80% 50%;
+    --badge-warning: 42 90% 55%;
+    --badge-success: 142 72% 45%;
+    --badge-error: 0 72% 50%;
+
+    /* Sombras (dark) */
+    --shadow-sm: 0 2px 8px -2px hsl(220 15% 5% / 0.3);
+    --shadow-md: 0 4px 16px -4px hsl(220 15% 5% / 0.4);
+    --shadow-lg: 0 8px 24px -6px hsl(220 15% 5% / 0.5);
+    --shadow-elegant: 0 10px 30px -10px hsl(90 30% 50% / 0.2);
+
+    /* Gradientes (stops para uso em gradient) */
+    --gradient-primary-from: 90 30% 50%;
+    --gradient-primary-to: 90 30% 40%;
+    --gradient-secondary-from: 42 35% 45%;
+    --gradient-secondary-to: 42 35% 35%;
+    --gradient-accent-from: 42 35% 45%;
+    --gradient-accent-to: 90 30% 50%;
+  }
+}
+
+/* Tipografia base (Inself): títulos = serif, corpo = body */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
