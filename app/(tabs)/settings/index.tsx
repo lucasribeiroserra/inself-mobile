@@ -103,7 +103,7 @@ export default function ProfileScreen() {
     user?.user_metadata?.full_name ||
     user?.user_metadata?.name ||
     user?.email?.split("@")[0] ||
-    "Usuário";
+    (language === "en" ? "User" : "Usuário");
 
   const handleSignOut = async () => {
     await signOut();
@@ -174,7 +174,8 @@ export default function ProfileScreen() {
             <View className="flex-row items-center gap-1.5 mt-0.5">
               <MaterialCommunityIcons name="fire" size={12} color={iconPrimary} />
               <Text className="text-xs text-muted-foreground dark:text-dark-muted-fg">
-                {checkinCount} {checkinCount === 1 ? "reflexão" : "reflexões"}
+                  {checkinCount}{" "}
+                  {language === "en" ? (checkinCount === 1 ? "reflection" : "reflections") : checkinCount === 1 ? "reflexão" : "reflexões"}
               </Text>
             </View>
           </View>
@@ -511,7 +512,9 @@ export default function ProfileScreen() {
                     <MaterialCommunityIcons name="clock-outline" size={16} color={iconPrimary} />
                   </View>
                   <View>
-                    <Text className="text-sm font-medium text-foreground dark:text-dark-fg">Horário da Notificação</Text>
+                    <Text className="text-sm font-medium text-foreground dark:text-dark-fg">
+                      {language === "en" ? "Notification time" : "Horário da Notificação"}
+                    </Text>
                     <Text className="text-xs text-muted-foreground dark:text-dark-muted-fg">{reminder_time}</Text>
                   </View>
                 </View>
@@ -522,7 +525,9 @@ export default function ProfileScreen() {
                   <View className="w-9 h-9 rounded-xl bg-primary/10 dark:bg-dark-primary/10 items-center justify-center">
                     <MaterialCommunityIcons name="bell-outline" size={16} color={iconPrimary} />
                   </View>
-                  <Text className="text-sm font-medium text-foreground dark:text-dark-fg">Lembrete Diário</Text>
+                  <Text className="text-sm font-medium text-foreground dark:text-dark-fg">
+                    {language === "en" ? "Daily reminder" : "Lembrete Diário"}
+                  </Text>
                 </View>
                 <Switch value={reminder_enabled} onValueChange={(v) => updateSettings({ reminder_enabled: v })} />
               </View>
@@ -627,7 +632,7 @@ export default function ProfileScreen() {
             {/* Widget preview - igual Virtus */}
             <View className="mb-6">
               <Text className="text-xs uppercase tracking-[0.15em] text-muted-foreground dark:text-dark-muted-fg font-semibold mb-3 px-1">
-                Prévia do Widget
+                {language === "en" ? "Widget preview" : "Prévia do Widget"}
               </Text>
               <View className="bg-card dark:bg-dark-card rounded-3xl p-5 border border-border dark:border-dark-border">
                 <View className="flex-row items-center gap-2 mb-3">
@@ -639,7 +644,9 @@ export default function ProfileScreen() {
                   </Text>
                 </View>
                 <Text className="text-sm font-serif text-foreground dark:text-dark-fg leading-relaxed italic">
-                  "Não perca mais tempo discutindo como um bom homem deve ser. Seja um."
+                {language === "en"
+                  ? "“Don’t lose more time discussing what a good man should be. Be one.”"
+                  : "“Não perca mais tempo discutindo como um bom homem deve ser. Seja um.”"}
                 </Text>
                 <Text className="text-[12px] text-muted-foreground/60 dark:text-dark-muted-fg/60 mt-2 uppercase tracking-wide">
                   — Marcus Aurelius
@@ -653,7 +660,9 @@ export default function ProfileScreen() {
               className="bg-card dark:bg-dark-card rounded-3xl p-4 flex-row items-center justify-center gap-2 mb-3"
             >
               <MaterialCommunityIcons name="navigation" size={16} color={iconPrimary} />
-              <Text className="text-sm font-medium text-primary dark:text-dark-primary">Iniciar tour</Text>
+              <Text className="text-sm font-medium text-primary dark:text-dark-primary">
+                {language === "en" ? "Start tour" : "Iniciar tour"}
+              </Text>
             </Pressable>
 
             {/* Sair da conta - igual Virtus */}
@@ -662,7 +671,9 @@ export default function ProfileScreen() {
               className="bg-card dark:bg-dark-card rounded-3xl p-4 flex-row items-center justify-center gap-2"
             >
               <MaterialCommunityIcons name="logout" size={16} color="#DC2626" />
-              <Text className="text-sm font-medium text-destructive">Sair da conta</Text>
+              <Text className="text-sm font-medium text-destructive">
+                {language === "en" ? "Sign out" : "Sair da conta"}
+              </Text>
             </Pressable>
           </>
         )}
@@ -670,7 +681,7 @@ export default function ProfileScreen() {
         {activeTab === "insights" && (
           <View className="py-8">
             <Text className="text-sm text-muted-foreground dark:text-dark-muted-fg text-center">
-              Insights em breve
+              {language === "en" ? "Insights coming soon" : "Insights em breve"}
             </Text>
           </View>
         )}

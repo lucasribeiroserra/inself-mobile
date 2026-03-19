@@ -4,9 +4,11 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { darkColors } from "@/lib/themeDark";
 import TopHeader from "@/components/TopHeader";
 import AppIcon from "@/components/AppIcon";
+import { useSettings } from "@/contexts/SettingsContext";
 
 export default function VirtuesScreen() {
   const { isDark } = useTheme();
+  const { language } = useSettings();
   const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
   const virtuePoints: Record<string, number> = {};
   const totalPoints = Object.values(virtuePoints).reduce((a, b) => a + b, 0);
@@ -22,14 +24,16 @@ export default function VirtuesScreen() {
           paddingBottom: 120,
         }}
       >
-        <Text className="text-2xl font-serif font-semibold text-foreground dark:text-dark-fg">Virtudes</Text>
+        <Text className="text-2xl font-serif font-semibold text-foreground dark:text-dark-fg">
+          {language === "en" ? "Virtues" : "Virtudes"}
+        </Text>
         <Text className="text-sm text-muted-foreground dark:text-dark-muted-fg mt-1 mb-6">
-          Seu caminho para a excelência moral
+          {language === "en" ? "Your path to moral excellence" : "Seu caminho para a excelência moral"}
         </Text>
 
         <View className="mt-6 mb-6 bg-card dark:bg-dark-card rounded-3xl p-5 items-center">
           <Text className="text-[12px] uppercase tracking-[0.2em] text-primary dark:text-dark-primary font-semibold mb-2">
-            Nível InSelf
+            {language === "en" ? "InSelf Level" : "Nível InSelf"}
           </Text>
           <Text className="text-4xl font-serif font-bold text-foreground dark:text-dark-fg mb-1">{level}</Text>
           <View className="h-1.5 bg-muted dark:bg-dark-muted rounded-full w-[200px] overflow-hidden">
@@ -39,7 +43,7 @@ export default function VirtuesScreen() {
             />
           </View>
           <Text className="text-[12px] text-muted-foreground dark:text-dark-muted-fg mt-1.5">
-            {totalPoints % 50}/50 para o próximo nível
+            {language === "en" ? `${totalPoints % 50}/50 to the next level` : `${totalPoints % 50}/50 para o próximo nível`}
           </Text>
         </View>
 
@@ -53,12 +57,16 @@ export default function VirtuesScreen() {
                   <AppIcon name={virtue.icon as any} size="xl" color={iconPrimary} />
                   <View className="flex-1">
                     <View className="flex-row items-center justify-between">
-                      <Text className="text-sm font-semibold text-foreground dark:text-dark-fg">{virtue.name}</Text>
+                      <Text className="text-sm font-semibold text-foreground dark:text-dark-fg">
+                        {language === "en" ? virtue.nameEn : virtue.name}
+                      </Text>
                       <Text className="text-[12px] text-muted-foreground dark:text-dark-muted-fg font-medium">
                         {points}/{virtue.maxPoints}
                       </Text>
                     </View>
-                    <Text className="text-[12px] text-muted-foreground dark:text-dark-muted-fg">{virtue.description}</Text>
+                    <Text className="text-[12px] text-muted-foreground dark:text-dark-muted-fg">
+                      {language === "en" ? virtue.descriptionEn : virtue.description}
+                    </Text>
                   </View>
                 </View>
                 <View className="h-2 bg-muted dark:bg-dark-muted rounded-full overflow-hidden">
@@ -74,7 +82,7 @@ export default function VirtuesScreen() {
 
         {totalPoints === 0 && (
           <Text className="text-center text-sm text-muted-foreground dark:text-dark-muted-fg py-8">
-            Complete reflexões e desafios para desenvolver suas virtudes.
+            {language === "en" ? "Complete reflections and challenges to develop your virtues." : "Complete reflexões e desafios para desenvolver suas virtudes."}
           </Text>
         )}
       </ScrollView>

@@ -4,8 +4,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { format, parseISO, isToday, isYesterday } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { ptBR, enUS } from "date-fns/locale";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useSettings } from "@/contexts/SettingsContext";
 import { useNotifications } from "@/contexts/NotificationsContext";
 import { darkColors } from "@/lib/themeDark";
 import type { AppNotification } from "@/lib/notificationsStorage";
@@ -30,7 +31,10 @@ function useTypeMeta() {
   );
 }
 
-function groupByDate(notifications: AppNotification[]): { label: string; items: AppNotification[] }[] {
+function groupByDate(
+  notifications: AppNotification[],
+  language: "pt" | "en"
+): { label: string; items: AppNotification[] }[] {
   const byDay = new Map<string, AppNotification[]>();
   const sorted = [...notifications].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   for (const n of sorted) {
@@ -42,7 +46,16 @@ function groupByDate(notifications: AppNotification[]): { label: string; items: 
   const todayKey = format(new Date(), "yyyy-MM-dd");
   const yesterdayKey = format(new Date(Date.now() - 864e5), "yyyy-MM-dd");
   return Array.from(byDay.entries()).map(([key, items]) => ({
-    label: key === todayKey ? "Hoje" : key === yesterdayKey ? "Ontem" : format(parseISO(key), "dd/MM/yyyy", { locale: ptBR }),
+    label:
+      key === todayKey
+        ? language === "en"
+          ? "Today"
+          : "Hoje"
+        : key === yesterdayKey
+          ? language === "en"
+            ? "Yesterday"
+            : "Ontem"
+          : format(parseISO(key), "dd/MM/yyyy", { locale: language === "en" ? enUS : ptBR }),
     items,
   }));
 }
@@ -51,12 +64,13 @@ export default function NotificationsScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { isDark } = useTheme();
+  const { language } = useSettings();
   const { notifications, hasUnread, markAsRead, markAllAsRead } = useNotifications();
   const iconFg = isDark ? darkColors.foreground : "#1f2937";
   const iconMuted = isDark ? darkColors.mutedForeground : "#D1D5DB";
   const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
   const typeMeta = useTypeMeta();
-  const groups = React.useMemo(() => groupByDate(notifications), [notifications]);
+  const groups = React.useMemo(() => groupByDate(notifications, language), [notifications, language]);
 
   return (
     <View className="flex-1 bg-background dark:bg-dark-bg">
@@ -68,11 +82,13 @@ export default function NotificationsScreen() {
           <MaterialCommunityIcons name="chevron-left" size={20} color={iconFg} />
         </Pressable>
         <Text className="text-lg font-serif font-semibold text-foreground dark:text-dark-fg flex-1">
-          Notificações
+          {language === "en" ? "Notifications" : "Notificações"}
         </Text>
         {hasUnread ? (
           <Pressable onPress={() => markAllAsRead()} className="px-3 py-1.5">
-            <Text className="text-xs font-medium text-primary dark:text-dark-primary">Marcar como lidas</Text>
+            <Text className="text-xs font-medium text-primary dark:text-dark-primary">
+              {language === "en" ? "Mark all as read" : "Marcar como lidas"}
+            </Text>
           </Pressable>
         ) : (
           <View className="w-9" />
@@ -86,10 +102,12 @@ export default function NotificationsScreen() {
           <View className="items-center py-16">
             <MaterialCommunityIcons name="bell-outline" size={40} color={iconMuted} />
             <Text className="text-base font-serif text-foreground dark:text-dark-fg mt-4 mb-1">
-              Nenhuma notificação
+              {language === "en" ? "No notifications" : "Nenhuma notificação"}
             </Text>
             <Text className="text-sm text-muted-foreground dark:text-dark-muted-fg text-center">
-              Você será avisado sobre reflexões, check-ins, desafios e novidades.
+              {language === "en"
+                ? "You'll be notified about reflections, check-ins, challenges, and updates."
+                : "Você será avisado sobre reflexões, check-ins, desafios e novidades."}
             </Text>
           </View>
         ) : (
@@ -102,7 +120,7 @@ export default function NotificationsScreen() {
                 <View className="gap-3">
                   {items.map((n) => {
                     const meta = typeMeta[n.type] ?? typeMeta.product;
-                    const timeStr = format(parseISO(n.created_at), "HH:mm", { locale: ptBR });
+                    const timeStr = format(parseISO(n.created_at), "HH:mm", { locale: language === "en" ? enUS : ptBR });
                     return (
                       <Pressable
                         key={n.id}

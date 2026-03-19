@@ -8,6 +8,7 @@ import {
   getReflectionHistory,
   toggleFavorite,
   type ReflectionEntry,
+  translateReflectionEntryForLanguage,
 } from "@/lib/reflectionHistory";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useReflectionsRefresh } from "@/contexts/ReflectionsContext";
@@ -143,11 +144,12 @@ export default function HistoryScreen() {
         ) : (
           <View className="gap-3">
             {displayList.map((entry) => {
+              const translated = translateReflectionEntryForLanguage(entry, language);
               const isExp = expanded === entry.id;
               const hasJourney =
-                entry.answers.identifique?.trim() ||
-                entry.answers.aceite?.trim() ||
-                entry.answers.aja?.trim();
+                translated.answers.identifique?.trim() ||
+                translated.answers.aceite?.trim() ||
+                translated.answers.aja?.trim();
               return (
                 <Pressable
                   key={entry.id}
@@ -181,19 +183,19 @@ export default function HistoryScreen() {
                     </View>
                   </View>
                   <Text className="text-base font-serif text-foreground dark:text-dark-fg leading-relaxed" numberOfLines={isExp ? undefined : 2}>
-                    {entry.message}
+                    {translated.message}
                   </Text>
                   <View className="mt-2">
-                    <Text className="text-xs text-muted-foreground dark:text-dark-muted-fg italic">"{entry.quote}"</Text>
-                    <Text className="text-[12px] text-muted-foreground dark:text-dark-muted-fg mt-0.5">— {entry.author}</Text>
+                    <Text className="text-xs text-muted-foreground dark:text-dark-muted-fg italic">"{translated.quote}"</Text>
+                    <Text className="text-[12px] text-muted-foreground dark:text-dark-muted-fg mt-0.5">— {translated.author}</Text>
                   </View>
-                  {entry.firstPrompt ? (
+                  {translated.firstPrompt ? (
                     <View className="mt-2 bg-primary/5 dark:bg-dark-primary/5 rounded-xl p-2.5">
                       <Text className="text-[12px] uppercase tracking-wider text-primary dark:text-dark-primary font-semibold mb-0.5">
                         {language === "en" ? "Reflection" : "Reflexão"}
                       </Text>
                       <Text className="text-sm text-foreground dark:text-dark-fg leading-relaxed" numberOfLines={isExp ? undefined : 2}>
-                        {entry.firstPrompt}
+                        {translated.firstPrompt}
                       </Text>
                     </View>
                   ) : null}

@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useReflectionsRefresh } from "@/contexts/ReflectionsContext";
 import { darkColors } from "@/lib/themeDark";
-import { getFavorites, toggleFavorite, type ReflectionEntry } from "@/lib/reflectionHistory";
+import { getFavorites, toggleFavorite, translateReflectionEntryForLanguage, type ReflectionEntry } from "@/lib/reflectionHistory";
 import { useSettings } from "@/contexts/SettingsContext";
 
 function hasJourney(entry: ReflectionEntry) {
@@ -103,8 +103,9 @@ export default function FavoritesScreen() {
         ) : (
           <View className="gap-5">
             {favorites.map((f) => {
+              const translated = translateReflectionEntryForLanguage(f, language);
               const expanded = expandedId === f.id;
-              const showJourney = hasJourney(f);
+              const showJourney = hasJourney(translated);
               return (
                 <Pressable
                   key={f.id}
@@ -124,22 +125,22 @@ export default function FavoritesScreen() {
                     </Pressable>
                   </View>
                   <Text className="text-base font-serif text-foreground dark:text-dark-fg leading-relaxed mb-3">
-                    {f.message}
+                    {translated.message}
                   </Text>
                   <View className="w-8 h-px bg-border dark:bg-dark-border mb-3" />
                   <Text className="text-sm text-muted-foreground dark:text-dark-muted-fg italic leading-relaxed mb-1">
-                    "{f.quote}"
+                    "{translated.quote}"
                   </Text>
                   <Text className="text-xs text-muted-foreground/60 dark:text-dark-muted-fg/60 uppercase tracking-wide mb-3">
-                    — {f.author}
+                    — {translated.author}
                   </Text>
-                  {f.firstPrompt ? (
+                  {translated.firstPrompt ? (
                     <View className="bg-primary/5 dark:bg-dark-primary/5 rounded-xl p-3 mb-3">
                       <Text className="text-[12px] uppercase tracking-wider text-primary dark:text-dark-primary font-semibold mb-1">
                         {language === "en" ? "Reflection" : "Reflexão"}
                       </Text>
                       <Text className="text-sm text-foreground dark:text-dark-fg leading-relaxed">
-                        {f.firstPrompt}
+                        {translated.firstPrompt}
                       </Text>
                     </View>
                   ) : null}

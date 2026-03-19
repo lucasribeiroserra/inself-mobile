@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { Badge } from "./badges";
-import type { ReflectionCategory, VirtueId } from "./dailyReflections";
+import type { AppLanguage, ReflectionCategory, VirtueId } from "./dailyReflections";
+import { getDailyReflectionByCategoryVirtue } from "./dailyReflections";
 import { apiFetch, isApiConfigured } from "./api";
 
 export interface ReflectionEntry {
@@ -25,6 +26,19 @@ export interface ReflectionEntry {
 }
 
 const STORAGE_KEY = "reflectionHistory";
+
+export function translateReflectionEntryForLanguage(entry: ReflectionEntry, language: AppLanguage): ReflectionEntry {
+  if (language === "pt") return entry;
+  if (!entry.category || !entry.virtue) return entry;
+  const translated = getDailyReflectionByCategoryVirtue(entry.category, entry.virtue, language);
+  return {
+    ...entry,
+    message: translated.message,
+    quote: translated.quote,
+    author: translated.author,
+    firstPrompt: translated.steps.identifique ?? null,
+  };
+}
 
 function normalizeReflectionEntry(row: unknown): ReflectionEntry {
   const r = row as Record<string, unknown>;
