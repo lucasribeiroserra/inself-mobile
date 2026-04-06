@@ -21,30 +21,24 @@ App de saúde mental **InSelf** para Android e iOS, com interface fiel ao design
 - `components/` — TopHeader, EmotionalCheckIn, EmotionalCheckOut, CheckInCelebration
 - `contexts/` — AuthContext (estado do usuário e contagem de check-ins)
 - `lib/` — api (cliente da API), virtues, challenges, dailyReflections, badges, reflectionHistory (API ou AsyncStorage)
-- `backend/` — API Node/Express com PostgreSQL (auth JWT, reflexões, favoritos, check-in/check-out emocional, settings)
-- `database/migrations/` — SQL para PostgreSQL (rodar no pgAdmin)
+
+**API e banco:** o backend e as migrations SQL ficam em **outro repositório/projeto** (não fazem parte deste repo). Suba a API por lá e aponte `EXPO_PUBLIC_API_URL` para a URL base (ex.: `http://localhost:3000`).
 
 ## Como rodar
 
-### Testar cadastro e login (app + backend integrados)
+### Testar cadastro e login (app + API)
 
-1. **Banco:** tenha o PostgreSQL com o banco `inself` criado e as migrations rodadas (veja "Banco de dados" abaixo). Usuário `inself` / senha `inself` no banco.
+1. No **projeto da API**: suba o PostgreSQL, rode as migrations e inicie o servidor (siga o README do repositório do backend).
 
-2. **Um terminal – backend:**
-   ```bash
-   cd backend && npm run dev
-   ```
-   Deve aparecer: `InSelf API rodando em http://localhost:3000`
-
-3. **Outro terminal – app:**
+2. **Terminal – app:**
    ```bash
    npm run start
    ```
-   Ou, para subir backend e app no mesmo comando: `npm run dev` (backend na porta 3000, Expo na 8082).
+   (`npm run dev` equivale ao mesmo: só o Expo na porta 8082.)
 
-4. O arquivo **`.env`** na raiz já está com `EXPO_PUBLIC_API_URL=http://localhost:3000`. O **`backend/.env`** está com `DATABASE_URL=postgresql://inself:inself@localhost:5432/inself`. Assim o app usa a API e o cadastro/login gravam no banco.
+3. Na raiz do app, configure **`.env`** com `EXPO_PUBLIC_API_URL` apontando para a API (ex.: `http://localhost:3000`; em dispositivo físico use o IP da máquina).
 
-5. No app: toque em "Cadastre-se", preencha **Nome**, **Email** e **Senha**, depois "Criar conta". Você deve ser levado para a home. Para entrar de novo: "Entrar" com o mesmo email e senha.
+4. No app: "Cadastre-se" / "Entrar" conforme o fluxo normal.
 
 ---
 
@@ -64,32 +58,11 @@ App de saúde mental **InSelf** para Android e iOS, com interface fiel ao design
    - Pressione `i` para iOS ou `a` para Android (com emulador ou dispositivo).
    - Para web: `npx expo start --web`
 
-## Banco de dados (PostgreSQL + pgAdmin)
+## Banco de dados e API
 
-O app persiste **check-in emocional**, **reflexões**, **favoritos**, **badges**, **tema** e **preferências** em **PostgreSQL**. Você acessa os dados pelo **pgAdmin** (ou qualquer cliente SQL).
+O app em si **não** inclui migrations nem servidor: isso fica no repositório do **backend**. Lá você cria o banco PostgreSQL, executa os SQLs de migration e sobe a API REST.
 
-### 1. Criar o banco no PostgreSQL
-
-1. Instale o PostgreSQL (local ou servidor) e abra o **pgAdmin**.
-2. Crie um banco (ex.: `inself`).
-3. Conecte nesse banco e abra o **Query Tool**.
-4. Execute todo o conteúdo do arquivo **`database/migrations/001_standalone_postgres.sql`** (tabelas `users`, conteúdo, jornada, gamificação + seed de emoções, categorias, virtudes, reflexões, badges).
-
-### 2. Subir a API (backend Node)
-
-O app fala com uma API REST que usa o mesmo PostgreSQL.
-
-```bash
-cd backend
-cp .env.example .env
-# Edite .env: DATABASE_URL=postgresql://usuario:senha@localhost:5432/inself e JWT_SECRET
-npm install
-npm run dev
-```
-
-A API roda em `http://localhost:3000` (ou a porta que você definir em `PORT`).
-
-### 3. Configurar o app
+### Configurar o app
 
 Na raiz do projeto mobile:
 
@@ -102,7 +75,7 @@ npx expo start -c
 
 Sem `EXPO_PUBLIC_API_URL` configurado, o app roda em modo **demo** (Auth mock, AsyncStorage).
 
-### 4. Ver os dados no pgAdmin
+### Ver os dados no pgAdmin
 
 No pgAdmin, use o **Query Tool** nas tabelas `public.users`, `public.user_reflections`, `public.emotional_checkins`, `public.emotional_checkouts`, etc. Todas as operações são por `user_id`.
 

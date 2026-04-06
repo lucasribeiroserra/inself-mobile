@@ -209,8 +209,8 @@ export default function AuthScreen() {
       if (!isApiConfigured()) {
         showToast(
           language === "en"
-            ? "Backend not connected. In the project root .env file, add: EXPO_PUBLIC_API_URL=http://localhost:3000 (and start the backend in the backend folder with npm run dev)."
-            : "Backend não conectado. No arquivo .env na raiz do projeto, adicione: EXPO_PUBLIC_API_URL=http://localhost:3000 (e suba o backend na pasta backend com npm run dev)."
+            ? "API not connected. In the project root .env file, add: EXPO_PUBLIC_API_URL=http://localhost:3000 (and start your API server)."
+            : "API não conectada. No arquivo .env na raiz do projeto, adicione: EXPO_PUBLIC_API_URL=http://localhost:3000 (e suba o servidor da API)."
         );
         return;
       }
@@ -226,8 +226,8 @@ export default function AuthScreen() {
       if (!isApiConfigured()) {
         showToast(
           language === "en"
-            ? "Backend not connected. In .env add EXPO_PUBLIC_API_URL=http://localhost:3000 and start the backend (npm run dev in the backend folder)."
-            : "Backend não conectado. No .env adicione EXPO_PUBLIC_API_URL=http://localhost:3000 e suba o backend (npm run dev na pasta backend)."
+            ? "API not connected. In .env add EXPO_PUBLIC_API_URL=http://localhost:3000 and start your API server."
+            : "API não conectada. No .env adicione EXPO_PUBLIC_API_URL=http://localhost:3000 e suba o servidor da API."
         );
         return;
       }
