@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 
 function parseTime(timeStr: string): Date {
   const [h, m] = timeStr.split(":").map(Number);
@@ -24,8 +25,8 @@ export default function ReminderTimeScreen() {
   const insets = useSafeAreaInsets();
   const { isDark } = useTheme();
   const { reminder_time, updateSettings, language } = useSettings();
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
-  const iconFg = isDark ? darkColors.foreground : "#1f2937";
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
+  const iconFg = isDark ? darkColors.foreground : lightColors.foreground;
 
   const [time, setTime] = React.useState(() => parseTime(reminder_time));
   const [showPicker, setShowPicker] = React.useState(Platform.OS === "ios");

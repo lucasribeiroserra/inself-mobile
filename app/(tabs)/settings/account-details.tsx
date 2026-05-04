@@ -15,6 +15,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 import { apiFetch, isApiConfigured } from "@/lib/api";
 
 const GENDER_OPTIONS = [
@@ -30,10 +31,10 @@ export default function AccountDetailsScreen() {
   const { user, refreshUser } = useAuth();
   const { isDark } = useTheme();
   const { language } = useSettings();
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
-  const iconMuted = isDark ? darkColors.mutedForeground : "#6B7280";
-  const placeholderColor = isDark ? darkColors.mutedForeground : "#9CA3AF";
-  const iconFg = isDark ? darkColors.foreground : "#1f2937";
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
+  const iconMuted = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
+  const placeholderColor = isDark ? darkColors.mutedForeground : lightColors.placeholder;
+  const iconFg = isDark ? darkColors.foreground : lightColors.foreground;
 
   const [name, setName] = React.useState(
     user?.user_metadata?.full_name || user?.user_metadata?.name || ""

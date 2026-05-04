@@ -15,6 +15,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import { isApiConfigured } from "@/lib/api";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 
 // Integração com Google desativada temporariamente; reativar quando configurar client IDs.
 
@@ -58,7 +59,7 @@ function ProfileSetupStep({
   const insets = useSafeAreaInsets();
   const { isDark } = useTheme();
   const { language } = useSettings();
-  const placeholderColor = isDark ? darkColors.mutedForeground : "#9CA3AF";
+  const placeholderColor = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [birthDate, setBirthDate] = useState("");
@@ -170,7 +171,7 @@ export default function AuthScreen() {
   const { signIn, signUp } = useAuth();
   const { isDark } = useTheme();
   const { language } = useSettings();
-  const placeholderColor = isDark ? darkColors.mutedForeground : "#9CA3AF";
+  const placeholderColor = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
   const [showProfileSetup, setShowProfileSetup] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");

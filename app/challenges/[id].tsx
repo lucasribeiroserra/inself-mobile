@@ -7,6 +7,7 @@ import { CHALLENGES } from "@/lib/challenges";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useNotifications } from "@/contexts/NotificationsContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 import AppIcon from "@/components/AppIcon";
 import { useSettings } from "@/contexts/SettingsContext";
 
@@ -16,11 +17,11 @@ export default function ChallengeDetailScreen() {
   const insets = useSafeAreaInsets();
   const { isDark } = useTheme();
   const { language } = useSettings();
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
-  const iconMuted = isDark ? darkColors.mutedForeground : "#6B7280";
-  const iconOnPrimary = isDark ? darkColors.primaryForeground : "#F5F0E8";
-  const iconFg = isDark ? darkColors.foreground : "#1f2937";
-  const placeholderColor = isDark ? darkColors.mutedForeground : "#9CA3AF";
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
+  const iconMuted = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
+  const iconOnPrimary = isDark ? darkColors.primaryForeground : lightColors.onPrimary;
+  const iconFg = isDark ? darkColors.foreground : lightColors.foreground;
+  const placeholderColor = isDark ? darkColors.mutedForeground : lightColors.placeholder;
   const challenge = CHALLENGES.find((c) => c.id === id);
   const { addNotification } = useNotifications();
 

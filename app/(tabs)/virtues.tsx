@@ -2,6 +2,7 @@ import { View, Text, ScrollView } from "react-native";
 import { VIRTUES } from "@/lib/virtues";
 import { useTheme } from "@/contexts/ThemeContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 import TopHeader from "@/components/TopHeader";
 import AppIcon from "@/components/AppIcon";
 import { useSettings } from "@/contexts/SettingsContext";
@@ -9,7 +10,7 @@ import { useSettings } from "@/contexts/SettingsContext";
 export default function VirtuesScreen() {
   const { isDark } = useTheme();
   const { language } = useSettings();
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
   const virtuePoints: Record<string, number> = {};
   const totalPoints = Object.values(virtuePoints).reduce((a, b) => a + b, 0);
   const level = Math.floor(totalPoints / 50) + 1;

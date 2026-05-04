@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { CHALLENGES, getDifficultyLabel, getDifficultyColor } from "@/lib/challenges";
 import { useTheme } from "@/contexts/ThemeContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 import TopHeader from "@/components/TopHeader";
 import AppIcon from "@/components/AppIcon";
 import { useSettings } from "@/contexts/SettingsContext";
@@ -12,8 +13,8 @@ export default function ChallengesScreen() {
   const router = useRouter();
   const { isDark } = useTheme();
   const { language } = useSettings();
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
-  const iconMuted = isDark ? darkColors.mutedForeground : "#6B7280";
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
+  const iconMuted = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
 
   return (
     <View className="flex-1 bg-background dark:bg-dark-bg">

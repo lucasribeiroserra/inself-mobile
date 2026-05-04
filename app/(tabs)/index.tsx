@@ -43,6 +43,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useReflectionsRefresh } from "@/contexts/ReflectionsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 import AppIcon from "@/components/AppIcon";
 import { getDailyReflection, getDailyReflectionByCategoryVirtue, getCategoryLabel, CATEGORY_ICONS, type DailyReflection } from "@/lib/dailyReflections";
 import { VIRTUES } from "@/lib/virtues";
@@ -76,9 +77,9 @@ export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { isDark } = useTheme();
   const { user, checkinCount: authCheckinCount, refreshCheckinCount } = useAuth();
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
-  const iconMuted = isDark ? darkColors.mutedForeground : "#6B7280";
-  const iconOnPrimary = isDark ? darkColors.primaryForeground : "#F5F0E8";
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
+  const iconMuted = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
+  const iconOnPrimary = isDark ? darkColors.primaryForeground : lightColors.onPrimary;
   const [showEmotionalCheckin, setShowEmotionalCheckin] = useState(false);
   const [checkinDoneToday, setCheckinDoneToday] = useState(false);
   const [initialEmotion, setInitialEmotion] = useState<InitialEmotion | null>(null);
@@ -526,7 +527,7 @@ export default function HomeScreen() {
             style={{ transform: [{ scale: streakScaleAnim }] }}
             className="flex-row items-center gap-1.5 bg-card dark:bg-dark-muted rounded-full px-3 py-1.5"
           >
-            <MaterialCommunityIcons name="fire" size={14} color={isDark ? darkColors.foreground : "#5A7A66"} />
+            <MaterialCommunityIcons name="fire" size={14} color={isDark ? darkColors.foreground : lightColors.primary} />
             <Text className="text-xs font-semibold text-foreground dark:text-dark-fg">
               {daysCount} {daysCount === 1 ? (language === "en" ? "day" : "dia") : language === "en" ? "days" : "dias"}
             </Text>
@@ -541,7 +542,7 @@ export default function HomeScreen() {
             <Text className="text-sm font-medium text-primary dark:text-dark-primary-fg">
               {language === "en" ? "How are you feeling?" : "Como você está se sentindo?"}
             </Text>
-            <MaterialCommunityIcons name="chevron-right" size={14} color={isDark ? darkColors.primaryForeground : "#5A7A66"} />
+            <MaterialCommunityIcons name="chevron-right" size={14} color={isDark ? darkColors.primaryForeground : lightColors.primary} />
           </Pressable>
         ) : initialEmotion ? (
           journeyFullyDone ? (
@@ -770,7 +771,7 @@ export default function HomeScreen() {
                       value={answers[currentStep]}
                       onChangeText={handleAnswerChange}
                       placeholder={language === "en" ? "Write your thoughts..." : "Escreva seus pensamentos..."}
-                      placeholderTextColor={isDark ? darkColors.mutedForeground : "#9CA3AF"}
+                      placeholderTextColor={isDark ? darkColors.mutedForeground : lightColors.placeholder}
                       multiline
                       numberOfLines={3}
                       className="w-full bg-background/60 dark:bg-dark-muted rounded-xl px-4 py-3 text-sm text-foreground dark:text-dark-fg border border-border dark:border-dark-border mb-3"
@@ -807,7 +808,7 @@ export default function HomeScreen() {
                         <MaterialCommunityIcons
                           name="send"
                           size={14}
-                          color={answers[currentStep].trim() ? iconOnPrimary : (isDark ? darkColors.mutedForeground : "#9CA3AF")}
+                          color={answers[currentStep].trim() ? iconOnPrimary : (isDark ? darkColors.mutedForeground : lightColors.placeholder)}
                         />
                       </Pressable>
                     </View>

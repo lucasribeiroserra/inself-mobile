@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 import { registerForPushNotificationsAsync } from "@/lib/registerPushNotifications";
 import { BADGES, getEarnedBadges, getCheckinCount, localizeBadge } from "@/lib/badges";
 import { ALL_CATEGORIES, getCategoryLabel, type ReflectionCategory } from "@/lib/dailyReflections";
@@ -97,8 +98,8 @@ export default function ProfileScreen() {
     };
   }, [user, updatePushToken]);
 
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
-  const iconMuted = isDark ? darkColors.mutedForeground : "#6B7280";
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
+  const iconMuted = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
   const displayName =
     user?.user_metadata?.full_name ||
     user?.user_metadata?.name ||
@@ -301,7 +302,7 @@ export default function ProfileScreen() {
             <View className="mb-6">
               <View className="flex-row items-center justify-between mb-3 px-1">
                 <View className="flex-row items-center gap-2">
-                  <MaterialCommunityIcons name="sparkles" size={14} color={iconPrimary} />
+                  <MaterialCommunityIcons name="star-four-points" size={14} color={iconPrimary} />
                   <Text className="text-xs uppercase tracking-[0.15em] text-muted-foreground dark:text-dark-muted-fg font-semibold">
                     Categorias Preferidas
                   </Text>
@@ -625,7 +626,7 @@ export default function ProfileScreen() {
                 <View className="gap-2 mb-5">
                   {premiumFeatures.map((feature) => (
                     <View key={feature} className="flex-row items-start gap-2.5">
-                      <MaterialCommunityIcons name="sparkles" size={14} color={iconPrimary} style={{ marginTop: 2 }} />
+                      <MaterialCommunityIcons name="star-four-points" size={14} color={iconPrimary} style={{ marginTop: 2 }} />
                       <Text className="text-xs text-foreground dark:text-dark-fg flex-1">{feature}</Text>
                     </View>
                   ))}
@@ -679,7 +680,7 @@ export default function ProfileScreen() {
               onPress={handleSignOut}
               className="bg-card dark:bg-dark-card rounded-3xl p-4 flex-row items-center justify-center gap-2"
             >
-              <MaterialCommunityIcons name="logout" size={16} color="#DC2626" />
+              <MaterialCommunityIcons name="logout" size={16} color={lightColors.destructive} />
               <Text className="text-sm font-medium text-destructive">
                 {language === "en" ? "Sign out" : "Sair da conta"}
               </Text>

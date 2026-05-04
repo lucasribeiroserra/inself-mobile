@@ -23,6 +23,12 @@ const ThemeContext = createContext<ThemeContextType>({
 
 export const useTheme = () => useContext(ThemeContext);
 
+function applySystemColorScheme(theme: Theme) {
+  if (typeof Appearance.setColorScheme === "function") {
+    Appearance.setColorScheme(theme);
+  }
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("light");
   const [hydrated, setHydrated] = useState(false);
@@ -32,7 +38,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const applyTheme = useCallback(
     async (next: Theme) => {
       setThemeState(next);
-      Appearance.setColorScheme(next);
+      applySystemColorScheme(next);
       if (isApiConfigured()) {
         await apiFetch("/settings", { method: "PATCH", body: { theme: next } });
       }
@@ -49,7 +55,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const next: Theme = data?.theme === "dark" || data?.theme === "light" ? data.theme : "light";
         if (!cancelled) {
           setThemeState(next);
-          Appearance.setColorScheme(next);
+          applySystemColorScheme(next);
         }
         setHydrated(true);
         return;
@@ -58,7 +64,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const next: Theme = stored === "dark" || stored === "light" ? stored : "light";
       if (!cancelled) {
         setThemeState(next);
-        Appearance.setColorScheme(next);
+        applySystemColorScheme(next);
       }
       setHydrated(true);
     })();

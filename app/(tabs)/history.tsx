@@ -13,6 +13,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 import { useReflectionsRefresh } from "@/contexts/ReflectionsContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 import TopHeader from "@/components/TopHeader";
 import { useSettings } from "@/contexts/SettingsContext";
 
@@ -33,9 +34,9 @@ export default function HistoryScreen() {
   const [history, setHistory] = useState<ReflectionEntry[]>([]);
   const [tab, setTab] = useState<Tab>("all");
   const [expanded, setExpanded] = useState<string | null>(null);
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
-  const iconMuted = isDark ? darkColors.mutedForeground : "#6B7280";
-  const iconOnPrimary = isDark ? darkColors.primaryForeground : "#F5F0E8";
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
+  const iconMuted = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
+  const iconOnPrimary = isDark ? darkColors.primaryForeground : lightColors.onPrimary;
 
   const [refreshing, setRefreshing] = useState(false);
   const load = useCallback(async () => {

@@ -26,7 +26,7 @@ export function NotificationReceivedListener() {
     });
     return () => {
       if (subscriptionRef.current) {
-        Notifications.removeNotificationSubscription(subscriptionRef.current);
+        subscriptionRef.current.remove();
         subscriptionRef.current = null;
       }
     };

@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useReflectionsRefresh } from "@/contexts/ReflectionsContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 import { getFavorites, toggleFavorite, translateReflectionEntryForLanguage, type ReflectionEntry } from "@/lib/reflectionHistory";
 import { useSettings } from "@/contexts/SettingsContext";
 
@@ -25,9 +26,9 @@ export default function FavoritesScreen() {
   const { isDark } = useTheme();
   const { language } = useSettings();
   const { refreshTrigger, refreshReflections } = useReflectionsRefresh();
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
-  const iconMuted = isDark ? darkColors.mutedForeground : "#D1D5DB";
-  const iconFg = isDark ? darkColors.foreground : "#1f2937";
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
+  const iconMuted = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
+  const iconFg = isDark ? darkColors.foreground : lightColors.foreground;
   const [favorites, setFavorites] = useState<ReflectionEntry[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 

@@ -39,7 +39,7 @@ export async function registerForPushNotificationsAsync(language: AppLanguage = 
 
   const raw =
     Constants.expoConfig?.extra?.eas?.projectId ??
-    (Constants as unknown as { eas?: { projectId?: string } }).easConfig?.projectId;
+    (Constants as unknown as { easConfig?: { projectId?: string } }).easConfig?.projectId;
   const projectId = typeof raw === "string" && raw.length > 0 ? raw : null;
   if (!projectId) {
     if (__DEV__) {

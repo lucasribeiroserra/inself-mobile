@@ -9,12 +9,13 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useNotifications } from "@/contexts/NotificationsContext";
 import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 import type { AppNotification } from "@/lib/notificationsStorage";
 
 function useTypeMeta() {
   const { isDark } = useTheme();
-  const primary = isDark ? darkColors.primary : "#5A7A66";
-  const muted = isDark ? darkColors.mutedForeground : "#6B7280";
+  const primary = isDark ? darkColors.primary : lightColors.primary;
+  const muted = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
   return React.useMemo(
     () =>
       ({
@@ -66,9 +67,9 @@ export default function NotificationsScreen() {
   const { isDark } = useTheme();
   const { language } = useSettings();
   const { notifications, hasUnread, markAsRead, markAllAsRead } = useNotifications();
-  const iconFg = isDark ? darkColors.foreground : "#1f2937";
-  const iconMuted = isDark ? darkColors.mutedForeground : "#D1D5DB";
-  const iconPrimary = isDark ? darkColors.primary : "#5A7A66";
+  const iconFg = isDark ? darkColors.foreground : lightColors.foreground;
+  const iconMuted = isDark ? darkColors.mutedForeground : lightColors.mutedForeground;
+  const iconPrimary = isDark ? darkColors.primary : lightColors.primary;
   const typeMeta = useTypeMeta();
   const groups = React.useMemo(() => groupByDate(notifications, language), [notifications, language]);
 

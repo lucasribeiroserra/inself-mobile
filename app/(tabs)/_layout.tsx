@@ -1,25 +1,39 @@
 import { Tabs } from "expo-router";
-import { useColorScheme } from "react-native";
 import { NAV_ICONS } from "@/lib/icons";
 import { useSettings } from "@/contexts/SettingsContext";
+import { useTheme } from "@/contexts/ThemeContext";
+import { darkColors } from "@/lib/themeDark";
+import { lightColors } from "@/lib/themeLight";
 
 const iconSize = 20;
 const iconProps = (focused: boolean) => ({ strokeWidth: focused ? 2.2 : 1.5 });
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark";
+  const { isDark } = useTheme();
   const { language } = useSettings();
   const { Home, Clock, Swords, Sparkles, User } = NAV_ICONS;
+  const tabColors = isDark
+    ? {
+        activeTint: darkColors.primary,
+        inactiveTint: darkColors.mutedForeground,
+        background: "rgba(26, 29, 36, 0.98)",
+        border: darkColors.border,
+      }
+    : {
+        activeTint: lightColors.tabActive,
+        inactiveTint: lightColors.mutedForeground,
+        background: lightColors.background,
+        border: lightColors.border,
+      };
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#7BA67B",
-        tabBarInactiveTintColor: isDark ? "#9CA3AF" : "#6B7280",
+        tabBarActiveTintColor: tabColors.activeTint,
+        tabBarInactiveTintColor: tabColors.inactiveTint,
         tabBarStyle: {
-          backgroundColor: isDark ? "rgba(26, 29, 36, 0.98)" : "rgba(245, 240, 232, 0.95)",
-          borderTopColor: isDark ? "#2D3139" : "#DDD6CC",
+          backgroundColor: tabColors.background,
+          borderTopColor: tabColors.border,
         },
         tabBarLabelStyle: { fontSize: 12, fontWeight: "500", letterSpacing: 0.5 },
       }}

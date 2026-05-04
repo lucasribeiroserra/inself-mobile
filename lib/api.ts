@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const DEV_API_URL = "http://127.0.0.1:3000";
 const API_URL =
   (typeof process !== "undefined" && process.env?.EXPO_PUBLIC_API_URL) ||
   (typeof globalThis !== "undefined" && (globalThis as { EXPO_PUBLIC_API_URL?: string }).EXPO_PUBLIC_API_URL) ||
@@ -10,7 +9,6 @@ const TOKEN_KEY = "inself-api-token";
 function getApiUrl(): string {
   const url = API_URL.trim();
   if (url) return url.replace(/\/$/, "");
-  if (typeof __DEV__ !== "undefined" && __DEV__) return DEV_API_URL;
   return "";
 }
 
@@ -37,16 +35,25 @@ async function authHeaders(): Promise<HeadersInit> {
 
 export async function apiFetch<T>(
   path: string,
-  options: RequestInit & { method?: string; body?: object } = {}
+  options: Omit<RequestInit, "body" | "method" | "headers"> & {
+    method?: string;
+    body?: unknown;
+    headers?: HeadersInit;
+  } = {}
 ): Promise<{ data?: T; error?: string; status: number }> {
   const baseUrl = getApiUrl();
   if (!baseUrl) return { error: "API não configurada", status: 0 };
   const { method = "GET", body, ...rest } = options;
   const url = `${baseUrl}${path.startsWith("/") ? path : `/${path}`}`;
+  const headers = new Headers(await authHeaders());
+  if (options.headers) {
+    const extraHeaders = new Headers(options.headers);
+    extraHeaders.forEach((value, key) => headers.set(key, value));
+  }
   const res = await fetch(url, {
     ...rest,
     method,
-    headers: { ...(await authHeaders()), ...(rest.headers as object) },
+    headers,
     ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
   });
   const text = await res.text();
